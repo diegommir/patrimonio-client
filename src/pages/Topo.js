@@ -5,7 +5,6 @@ export default function Topo() {
     return (
         <div>
             <Menu />
-            <h1>Patrimônio</h1>
             <Outlet />
         </div>
     )

@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './css/index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import './css/index.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min'
 import Home from './pages/Home'
-import Teste from './pages/Teste'
 import Topo from './pages/Topo'
+import Local from './pages/Local'
 //import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -14,7 +16,7 @@ root.render(
             <Routes>
                 <Route path="/" element={<Topo />}>
                     <Route path="" element={<Home />} />
-                    <Route path="teste" element={<Teste />} />
+                    <Route path="local" element={<Local />} />
                 </Route>
             </Routes>
         </BrowserRouter>
