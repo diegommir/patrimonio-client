@@ -29,8 +29,8 @@ export default function Local() {
 
     return (
         <div>
-            <h2>Locais</h2>
-            <h3>Raiz...</h3>
+            <h3>Locais</h3>
+            <h4>Raiz...</h4>
             <hr />
             <SalvaLocais key={ local.id } local={ local } salvarCallBack={ salvarCallBack } />
             <hr />
