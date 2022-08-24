@@ -1,29 +1,28 @@
 import { useState } from 'react'
-import { Modal } from 'bootstrap'
-import Alerta from '../mensagem/Alerta'
+import Popup from '../mensagem/Popup'
 
 export default function SalvaLocais(props) {
-    const [id, setId] = useState(props.local.id)
-    const [nome, setNome] = useState(props.local.nome)
-    const [idPai, setIdPai] = useState(props.local.pai ? props.local.pai.id : '')
+    const [id, setId] = useState(props.local.id ? props.local.id : '')
+    const [nome, setNome] = useState(props.local.nome ? props.local.nome : '')
 
-    const nomePai = props.local.pai ? props.local.pai.nome : ''
+    const [mostrarAguarde, setMostrarAguarde] = useState(false)
+    const [mostrarMsg, setMostrarMsg] = useState(false)
+    const [msg, setMsg] = useState('')
 
     const salvar = () => {
-        const msg = new Modal('#aguarde', {
-            keyboard: false
-        })
-        msg.show()
+        if (!nome) {
+            setMsg('O nome do local não pode ser vazio.')
+            setMostrarMsg(true)
+            return
+        }
+
+        setMostrarAguarde(true)
 
         const local = {
             id,
             nome,
-            pai: {
-                id: idPai
-            }
+            pai: props.pai
         }
-
-        console.log(local)
 
         fetch(process.env.REACT_APP_API_URI + '/local', {
             method: 'POST',
@@ -38,7 +37,7 @@ export default function SalvaLocais(props) {
             console.error(err)
         })
         .finally(() => {
-            msg.dispose()
+            setMostrarAguarde(false)
         })
     }
 
@@ -47,25 +46,23 @@ export default function SalvaLocais(props) {
     }
 
     return (
-        <form className="mt-3 mb-3">
-            <Alerta id="aguarde" mensagem="Por favor aguarde..." />
+        <div>
+            <Popup id="aguarde" mostrar={ mostrarAguarde } fechar={ () => setMostrarAguarde(false) } titulo="Aguarde...">Por favor aguarde...</Popup>
+            <Popup id="msg" mostrar={ mostrarMsg } fechar={ () => setMostrarMsg(false) } titulo="Atenção:">{ msg }</Popup>
 
-            <input type="hidden" id="id" name="id" value={ id } onChange={ (e) => setId(e.target.value) }></input>
-            <input type="hidden" id="paiId" name="paiId" value={ idPai } onChange={ (e) => setIdPai(e.target.value) }></input>
+            <form className="mt-3 mb-3">
+                <input type="hidden" id="id" name="id" value={ id } onChange={ (e) => setId(e.target.value) }></input>
 
-            <div className="row mb-3">
-                <div className="col-sm-6">
-                    <label className="form-label">Nome:</label>
-                    <input className="form-control" id="nome" name="nome" value={ nome } onChange={ (e) => setNome(e.target.value) }></input>
+                <div className="row mb-3">
+                    <div className="col-sm-12">
+                        <label className="form-label">Nome:</label>
+                        <input className="form-control" id="nome" name="nome" value={ nome } onChange={ (e) => setNome(e.target.value) }></input>
+                    </div>
                 </div>
-                <div className="col-sm-6">
-                    <label className="form-label">Pai:</label>
-                    <input className="form-control" id="nomePai" name="nomePai" value={ nomePai } readOnly></input>
-                </div>
-            </div>
 
-            <button type="button" className="btn btn-primary m-1" onClick={ salvar }>Salvar</button>
-            <button type="button" className="btn btn-secondary" onClick={ cancelar }>Cancelar</button>
-        </form>
+                <button type="button" className="btn btn-primary m-1" onClick={ salvar }>Salvar</button>
+                <button type="button" className="btn btn-secondary" onClick={ cancelar }>Cancelar</button>
+            </form>
+        </div>
     )
 }
