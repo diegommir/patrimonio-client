@@ -6,15 +6,41 @@ export default function Menu() {
             <div className="container-fluid">
                 <div className="dropdown">
                     <button type="button" className="btn dropdown-toggle link-light" 
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <ul className="dropdown-menu text-small shadow">
-                        <li className="">
+                    <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+                        <li>
                             <Link className="dropdown-item" to="/">Home</Link>
                         </li>
-                        <li className="">
+                        <li>
+                            <hr className="dropdown-divider" />
+                        </li>
+                        <li>
                             <Link className="dropdown-item" to="/local">Manutenção de Locais</Link>
+                        </li>
+                        <li>
+                            <div className="dropend">
+                                <button type="button" className="dropdown-item dropdown-toggle" 
+                                    data-bs-toggle="dropdown" aria-expanded="false">Manutenção de Patrimônios</button>
+                                <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+                                    <li>
+                                        <Link className="dropdown-item" to="/">Movimentar Patrimônio</Link>
+                                    </li>
+                                    <li>
+                                        <hr className="dropdown-divider" />
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" to="/">Novo Patrimônio</Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" to="/">Atualizar Dados</Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" to="/">Baixar Patrimônio</Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
